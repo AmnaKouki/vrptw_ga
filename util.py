@@ -127,7 +127,7 @@ def calculate_fitness(solution, data,distance_weight=0.7, waiting_time_weight=0.
 
 
 # Fonction objectif qui minimise la distance totale parcourue et le nombre de véhicules utilisés
-def objective(solution, data,vehicules_number_weigth=0.5):
+def objective(solution, data,vehicules_number_weigth=0.7):
     total_distance=0
     total_waiting_time=0
     nombre_de_véhicules = len(solution)  # Nombre de routes dans la solution
@@ -478,7 +478,6 @@ def cx_partially_matched1(ind1, ind2):
     
     return ind1, ind2
 
-
 def remplacement_avec_elitisme(population, enfants, taux_elitisme, data, distance_weight=0.7, waiting_time_weight=0.3):
     # Taille de la population
     taille_population = len(population)
@@ -505,11 +504,13 @@ def remplacement_avec_elitisme(population, enfants, taux_elitisme, data, distanc
     elites = individus_tries[:nombre_elites]
     
     # Formation de la nouvelle population en sélectionnant les meilleurs individus (à l'exclusion des élites)
-    nouvelle_population = individus_tries[nombre_elites:taille_population]
+    nouvelle_population = individus_tries[nombre_elites:]
     
-    # print("---------------------- elite : \n")
-    # print(elites)
-    return elites + nouvelle_population
+    # Ajout des élites de la population initiale à la nouvelle population
+    for elite_solution in population[:nombre_elites]:
+        nouvelle_population.append(elite_solution)
+    
+    return nouvelle_population
 
 
 
@@ -556,3 +557,5 @@ def fill_gaps(child, parent, crossover_points):
 # A higher value increases the likelihood of crossover, while a lower value decreases it. 
 def will_crossover(taux_croisement=0.8):
     return random.random() <taux_croisement
+
+
