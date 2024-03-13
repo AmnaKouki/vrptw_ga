@@ -1,6 +1,0 @@
-distance_weight = 0.4 # selection
-waiting_time_weight = 0.6 # selection
-vehicules_number_weigth=0.5 # fonction objective
-mutation_rate = 0.05
-taux_croisement=0.8
-taux_elitisme = 0.1
