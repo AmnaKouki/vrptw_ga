@@ -1,41 +1,43 @@
 import time
 from util import *
-def algo_genetique(data, taille_population,nbr_iteration, distance_weight, waiting_time_weight, vehicules_number_weigth, taux_croisement, mutation_rate, taux_elitisme):
-    best_solutions = []
-    population = initialize_population(taille_population,data)
-    #population = initialize_population_nearest(taille_population,data)
-    affichage_resultat(population, vehicules_number_weigth)
+# def algo_genetique(data, taille_population,nbr_iteration, distance_weight, waiting_time_weight, vehicules_number_weigth, taux_croisement, mutation_rate, taux_elitisme):
+#     best_solutions = []
+#     population = initialize_population(taille_population,data)
+#     #population = initialize_population_nearest(taille_population,data)
+#     affichage_resultat(population, vehicules_number_weigth)
     
     
-    for i in range(nbr_iteration):
-        fitness_scores = [calculate_fitness(solution, data) for solution in population]
+#     for i in range(nbr_iteration):
+#         fitness_scores = [calculate_fitness(solution, data) for solution in population]
         
-        parent1 ,parent1_number= roulette_selection(population, fitness_scores)
-        parent2 , parent2_number = roulette_selection(population, fitness_scores)
+#         parent1 ,parent1_number= roulette_selection(population, fitness_scores)
+#         parent2 , parent2_number = roulette_selection(population, fitness_scores)
         
-        if will_crossover(taux_croisement):
-            ch1,ch2 = cx_partially_matched(parent1, parent2,data)
-            #ch1,ch2 = order_crossover(parent1, parent2,data)
-        else :
-            ch1=parent1
-            ch2=parent2
-        mutated_solution = mutation_with_rate(list(ch1), data, mutation_rate)
-        mutated_solution2 = mutation_with_rate(list(ch2), data, mutation_rate)
-        nouvelle_population = remplacement_avec_elitisme(population, [mutated_solution, mutated_solution2], taux_elitisme, data, distance_weight, waiting_time_weight)
-        population = nouvelle_population
+#         if will_crossover(taux_croisement):
+#             ch1,ch2 = cx_partially_matched(parent1, parent2,data)
+#             #ch1,ch2 = order_crossover(parent1, parent2,data)
+#         else :
+#             ch1=parent1
+#             ch2=parent2
+#         mutated_solution = mutation_with_rate(list(ch1), data, mutation_rate)
+#         mutated_solution2 = mutation_with_rate(list(ch2), data, mutation_rate)
+#         nouvelle_population = remplacement_avec_elitisme(population, [mutated_solution, mutated_solution2], taux_elitisme, data, distance_weight, waiting_time_weight)
+#         population = nouvelle_population
         
-        sol =affichage_resultat(population, vehicules_number_weigth)
-        best_solutions.append(sol)
+#         sol =affichage_resultat(population, vehicules_number_weigth)
+#         best_solutions.append(sol)
         
-    #affichage_resultat(population, vehicules_number_weigth)
-    # print("Best Solution: ")
-    # print(best_solutions)
-    best_solution(best_solutions)
-    return population
+#     #affichage_resultat(population, vehicules_number_weigth)
+#     # print("Best Solution: ")
+#     # print(best_solutions)
+#     best_solution(best_solutions)
+#     return population
 
 def algo_genetique_with_time_limit(data, taille_population, distance_weight, waiting_time_weight, vehicules_number_weigth, taux_croisement, mutation_rate, taux_elitisme, time_limit):
-    start_time = time.time()
+    
     population = initialize_population(taille_population, data)
+    #population = initialize_population_insertion(taille_population,data)
+    start_time = time.time()
     best_solutions = []
     #print(affichage_resultat(population, vehicules_number_weigth))
     
@@ -53,6 +55,7 @@ def algo_genetique_with_time_limit(data, taille_population, distance_weight, wai
         
         if will_crossover(taux_croisement):
             ch1, ch2 = cx_partially_matched(parent1, parent2, data)
+            #ch1,ch2 = order_crossover(parent1, parent2,data)
         else:
             ch1 = parent1
             ch2 = parent2
@@ -118,20 +121,20 @@ def affichage_resultat(population, vehicules_number_weigth):
          
  
 
-data = start('RC105')
+data = start('RC202')
 taille_population = 100
 time_limit = 3
 nbr_iteration = 50
 
 distance_weight = 0.7 # selection
 waiting_time_weight = 0.6 # selection
-vehicules_number_weigth=0.9 # fonction objective
-mutation_rate = 0.05
-taux_croisement=0.8
+vehicules_number_weight=0.9 # fonction objective
+mutation_rate = 0.2 #0.05
+taux_croisement=0.5 #0.8
 taux_elitisme = 0.1
 
 
-algo_genetique_with_time_limit(data, taille_population, distance_weight, waiting_time_weight, vehicules_number_weigth,
+algo_genetique_with_time_limit(data, taille_population, distance_weight, waiting_time_weight, vehicules_number_weight,
                                taux_croisement, mutation_rate, taux_elitisme, time_limit)       
 # algo_genetique(data, taille_population, nbr_iteration, distance_weight, waiting_time_weight, vehicules_number_weigth, taux_croisement, mutation_rate, taux_elitisme)
 

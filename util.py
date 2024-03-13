@@ -315,7 +315,7 @@ def route_time_at_index(index, route, data):
         time += data["distance_matrix"][current_client_id][next_client_id] + data[getClientName(current_client_id)]["service_time"]
     return time
 
-def initialize_population_nearest(taille_population, data):
+def initialize_population_insertion(taille_population, data):
     population = []
 
     while len(population) < taille_population:
@@ -431,7 +431,6 @@ def mutation_with_rate(solution, data, mutation_rate):
     
     return mutated_solution
 def mutation_with_rate1(solution, data, mutation_rate):
-      # Copie de la solution pour éviter de modifier l'original
     mutated_solution = solution.copy()
     
     # Vérification du taux de mutation
